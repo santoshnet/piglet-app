@@ -1,27 +1,449 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Terms & Conditions - Piglet</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions – Piglet AI Expense Tracker</title>
+  <meta name="description" content="Piglet Terms & Conditions – Read our terms of service before using the Piglet app.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-light: #4ade80;
+      --bg: #080e14;
+      --bg2: #0d1520;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-faint: #64748b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 6%;
+      background: rgba(8,14,20,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 1.3rem; font-weight: 800; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: .9rem;
+      font-weight: 500; padding: 8px 16px; border-radius: 8px;
+      border: 1px solid var(--card-border);
+      transition: color .2s, border-color .2s;
+    }
+    .nav-back:hover { color: var(--green); border-color: rgba(34,197,94,.3); }
+
+    /* HERO BAND */
+    .page-hero {
+      padding: 60px 6% 50px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.07) 0%, transparent 60%);
+      border-bottom: 1px solid var(--card-border);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%);
+    }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25);
+      color: var(--green); font-size: .78rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px;
+    }
+    .page-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+    .meta-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .85rem; color: var(--text-muted);
+    }
+
+    /* LAYOUT */
+    .content-wrap {
+      max-width: 991px; margin: 0 auto;
+      padding: 60px 6%;
+      display: grid; grid-template-columns: 1fr 260px; gap: 48px;
+      align-items: start;
+    }
+    .content-main { min-width: 0; }
+
+    /* SIDEBAR TABLE OF CONTENTS */
+    .toc {
+      position: sticky; top: 80px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 24px; font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-faint); margin-bottom: 14px;
+    }
+    .toc a {
+      display: block; color: var(--text-muted); text-decoration: none;
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color .2s; font-size: .84rem;
+    }
+    .toc a:last-child { border-bottom: none; }
+    .toc a:hover { color: var(--green); }
+
+    /* SECTIONS */
+    .policy-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .policy-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .section-num {
+      font-size: .75rem; font-weight: 700; color: var(--green);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px;
+    }
+    .policy-section h2 {
+      font-size: 1.35rem; font-weight: 700; margin-bottom: 16px;
+      letter-spacing: -.01em;
+    }
+    .policy-section p {
+      color: var(--text-muted); font-size: .95rem;
+      margin-bottom: 14px; line-height: 1.8;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    /* LIST */
+    .policy-list {
+      list-style: none; margin: 14px 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .policy-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      color: var(--text-muted); font-size: .95rem;
+    }
+    .policy-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); margin-top: 8px; flex-shrink: 0;
+    }
+
+    /* INFO / WARNING CARDS */
+    .info-card {
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 12px; padding: 18px 20px; margin: 20px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .info-card-icon { font-size: 1.2rem; margin-top: 2px; }
+    .info-card-text { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+    .info-card-text strong { color: var(--green-light); }
+
+    .warn-card {
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 12px; padding: 18px 20px; margin: 20px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .warn-card-text { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+    .warn-card-text strong { color: #f87171; }
+
+    /* CONTACT CARD */
+    .contact-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 28px 24px; margin-top: 20px;
+    }
+    .contact-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
+    .contact-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .contact-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-info .label { font-size: .75rem; color: var(--text-faint); }
+    .contact-info .value { font-size: .9rem; color: var(--text); font-weight: 500; }
+    .contact-info a { color: var(--green); text-decoration: none; }
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--card-border);
+      text-align: center; padding: 28px 6%;
+    }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { font-size: .87rem; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--green); }
+    .footer-copy { font-size: .82rem; color: var(--text-faint); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .content-wrap { grid-template-columns: 1fr; }
+      .toc { display: none; }
+    }
+  </style>
 </head>
 <body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.png" alt="Piglet Logo"></a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">📋 Legal Document</div>
   <h1>Terms & Conditions</h1>
+  <div class="page-meta">
+    <div class="meta-item">📅 Effective: January 1, 2026</div>
+    <div class="meta-item">🔄 Last Updated: March 2026</div>
+    <div class="meta-item">📖 ~6 min read</div>
+  </div>
+</div>
 
-  <p>By using Piglet, you agree to the following terms.</p>
+<div class="content-wrap">
+  <!-- MAIN CONTENT -->
+  <div class="content-main">
 
-  <h3>Usage</h3>
-  <p>The app is for personal financial tracking and advisory purposes only.</p>
+    <div class="info-card">
+      <div class="info-card-icon">📋</div>
+      <div class="info-card-text">
+        <strong>Please read these Terms carefully.</strong> By downloading, installing, or using the Piglet app, you agree to be bound by these Terms & Conditions. If you do not agree, please uninstall the app and refrain from using our services.
+      </div>
+    </div>
 
-  <h3>No Financial Guarantee</h3>
-  <p>AI suggestions are for informational purposes and not financial advice.</p>
+    <!-- 1 -->
+    <div class="policy-section" id="s1">
+      <div class="section-num">Section 01</div>
+      <h2>Agreement to Terms</h2>
+      <p>These Terms & Conditions ("Terms") constitute a legally binding agreement between you ("User", "you") and Piglet App ("Company", "we", "us", "our") governing your use of the Piglet mobile application and related services.</p>
+      <p>By accessing or using Piglet, you confirm that you are at least 13 years old and have the legal capacity to enter into this agreement. If you are using Piglet on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
+    </div>
 
-  <h3>Liability</h3>
-  <p>We are not responsible for financial losses based on app usage.</p>
+    <!-- 2 -->
+    <div class="policy-section" id="s2">
+      <div class="section-num">Section 02</div>
+      <h2>Description of Service</h2>
+      <p>Piglet is a personal finance management application that provides:</p>
+      <ul class="policy-list">
+        <li>Manual expense and income tracking with categorization</li>
+        <li>AI-powered financial insights and conversational advice via Gemini AI</li>
+        <li>Budget management, savings goal tracking, and financial analytics</li>
+        <li>Bill and payment reminders via push notifications</li>
+        <li>Optional Google Drive backup and restore of financial data</li>
+        <li>Visual charts and reports of your financial data</li>
+      </ul>
+      <p>The app is available on Android (via Google Play Store) and iOS (via Apple App Store). We reserve the right to modify, suspend, or discontinue any feature at any time with reasonable notice.</p>
+    </div>
 
-  <h3>Updates</h3>
-  <p>We may update these terms at any time.</p>
+    <!-- 3 -->
+    <div class="policy-section" id="s3">
+      <div class="section-num">Section 03</div>
+      <h2>User Accounts & Registration</h2>
+      <p>To access Piglet's features, you must create an account using either:</p>
+      <ul class="policy-list">
+        <li>Email address and password (managed via Firebase Authentication)</li>
+        <li>Google Sign-In (using your Google account credentials)</li>
+      </ul>
+      <p>You are responsible for:</p>
+      <ul class="policy-list">
+        <li>Maintaining the confidentiality of your account credentials</li>
+        <li>All activity that occurs under your account</li>
+        <li>Notifying us immediately of any unauthorized account access at <a href="mailto:support@pigletapp.com" style="color:var(--green)">support@pigletapp.com</a></li>
+        <li>Ensuring that your account information is accurate and up to date</li>
+      </ul>
+      <p>We reserve the right to terminate accounts that violate these Terms, engage in fraudulent activity, or have been inactive for more than 24 months.</p>
+    </div>
 
-  <h3>Contact</h3>
-  <p>Email: support@pigletapp.com</p>
+    <!-- 4 -->
+    <div class="policy-section" id="s4">
+      <div class="section-num">Section 04</div>
+      <h2>No Financial Guarantee – AI Disclaimer</h2>
+      <div class="warn-card">
+        <div class="info-card-icon">⚠️</div>
+        <div class="warn-card-text">
+          <strong>Important Disclaimer:</strong> Piglet and its AI advisor do NOT constitute professional financial advice. All AI-generated insights, suggestions, and recommendations are for <strong>informational and educational purposes only</strong>.
+        </div>
+      </div>
+      <p>The AI features within Piglet are powered by Google's Gemini API and are designed to assist you in understanding your spending patterns. However:</p>
+      <ul class="policy-list">
+        <li>AI suggestions should not be relied upon as a substitute for advice from a qualified financial advisor, accountant, or investment professional</li>
+        <li>We make no representations or warranties about the accuracy, completeness, or reliability of AI-generated financial suggestions</li>
+        <li>Actual financial outcomes may differ significantly from any projections or recommendations made by the app</li>
+        <li>You should consult a licensed financial professional before making major financial decisions</li>
+        <li>Past financial patterns analyzed by the app are not indicative of future results</li>
+      </ul>
+    </div>
+
+    <!-- 5 -->
+    <div class="policy-section" id="s5">
+      <div class="section-num">Section 05</div>
+      <h2>Acceptable Use Policy</h2>
+      <p>You agree to use Piglet only for lawful, personal financial management purposes. You must NOT:</p>
+      <ul class="policy-list">
+        <li>Use the app for any illegal activity, including money laundering or fraud</li>
+        <li>Attempt to reverse-engineer, decompile, or tamper with the app's code or security features</li>
+        <li>Use automated scripts, bots, or scraping tools to access the service</li>
+        <li>Share your account with multiple people or resell access to the service</li>
+        <li>Upload malicious content or attempt to compromise the security of our infrastructure</li>
+        <li>Use the AI chat feature to generate harmful, illegal, or misleading financial content</li>
+        <li>Misrepresent your identity or impersonate other users</li>
+      </ul>
+      <p>Violation of this policy may result in immediate account termination and, where applicable, reporting to appropriate legal authorities.</p>
+    </div>
+
+    <!-- 6 -->
+    <div class="policy-section" id="s6">
+      <div class="section-num">Section 06</div>
+      <h2>Intellectual Property</h2>
+      <p>All intellectual property rights in and to the Piglet application — including the software code, design, branding, logo, features, and content — are owned by or licensed to Piglet App.</p>
+      <ul class="policy-list">
+        <li>We grant you a limited, non-exclusive, non-transferable, revocable license to use Piglet for your personal, non-commercial financial management</li>
+        <li>You may not copy, reproduce, distribute, or create derivative works from any part of the app without written permission</li>
+        <li>The "Piglet" name, logo, and branding are trademarks of Piglet App</li>
+        <li>All data you enter into Piglet remains your property — we claim no ownership over your financial data</li>
+      </ul>
+    </div>
+
+    <!-- 7 -->
+    <div class="policy-section" id="s7">
+      <div class="section-num">Section 07</div>
+      <h2>Privacy & Data</h2>
+      <p>Your use of Piglet is also governed by our <a href="privacy.html" style="color:var(--green)">Privacy Policy</a>, which is incorporated into these Terms by reference. By agreeing to these Terms, you also agree to our Privacy Policy.</p>
+      <p>You retain full ownership of all financial data you enter into the app. We process this data solely to provide the service and improve your experience, as detailed in our Privacy Policy.</p>
+    </div>
+
+    <!-- 8 -->
+    <div class="policy-section" id="s8">
+      <div class="section-num">Section 08</div>
+      <h2>Limitation of Liability</h2>
+      <div class="warn-card">
+        <div class="info-card-icon">⚖️</div>
+        <div class="warn-card-text"><strong>Liability Cap:</strong> To the maximum extent permitted by law, Piglet App shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to financial losses, arising from your use of the app.</div>
+      </div>
+      <p>We are not responsible for:</p>
+      <ul class="policy-list">
+        <li>Financial losses or decisions made based on app suggestions or AI recommendations</li>
+        <li>Data loss due to device failure, account compromise, or circumstances beyond our control</li>
+        <li>Service interruptions, bugs, or errors that affect the accuracy of data</li>
+        <li>Third-party services (Google Firebase, Gemini API, Google Drive) that we integrate with</li>
+        <li>Any unauthorized access to your account due to your own failure to secure credentials</li>
+      </ul>
+      <p>Our total liability to you for any claim arising under these Terms shall not exceed the amount you paid for the service in the 12 months preceding the claim (or ₹500 if the service was free to you).</p>
+    </div>
+
+    <!-- 9 -->
+    <div class="policy-section" id="s9">
+      <div class="section-num">Section 09</div>
+      <h2>Termination</h2>
+      <p>Either party may terminate this agreement at any time:</p>
+      <ul class="policy-list">
+        <li><strong style="color:var(--text)">You:</strong> Delete your account via Settings → Account → Delete Account, or simply uninstall the app</li>
+        <li><strong style="color:var(--text)">Us:</strong> We may suspend or terminate your account for Terms violations, with or without notice</li>
+      </ul>
+      <p>Upon termination, your right to use Piglet ceases immediately. Your data will be deleted within 30 days per our Privacy Policy. Sections relating to Intellectual Property, Limitation of Liability, and Dispute Resolution survive termination.</p>
+    </div>
+
+    <!-- 10 -->
+    <div class="policy-section" id="s10">
+      <div class="section-num">Section 10</div>
+      <h2>Updates to These Terms</h2>
+      <p>We may update these Terms periodically to reflect changes in the app, our business model, or applicable laws. When we make material changes:</p>
+      <ul class="policy-list">
+        <li>We will notify you via an in-app notification or email</li>
+        <li>The "Last Updated" date on this page will be revised</li>
+        <li>For significant changes, we may require your explicit consent before continued use</li>
+      </ul>
+      <p>Your continued use of Piglet after the effective date of revised Terms constitutes your acceptance of those changes. If you disagree with the updated Terms, you must stop using the app and delete your account.</p>
+    </div>
+
+    <!-- 11 -->
+    <div class="policy-section" id="s11">
+      <div class="section-num">Section 11</div>
+      <h2>Governing Law & Disputes</h2>
+      <p>These Terms are governed by the laws of India. Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in India.</p>
+      <p>Before initiating formal legal proceedings, we encourage you to reach out to us directly at <a href="mailto:support@pigletapp.com" style="color:var(--green)">support@pigletapp.com</a> — we aim to resolve all concerns amicably within 30 days.</p>
+    </div>
+
+    <!-- 12 -->
+    <div class="policy-section" id="s12">
+      <div class="section-num">Section 12</div>
+      <h2>Contact Us</h2>
+      <p>For any questions about these Terms, or to report a violation, please reach out:</p>
+      <div class="contact-card">
+        <h3>🐷 Piglet Legal & Support Team</h3>
+        <div class="contact-row">
+          <div class="contact-icon">📧</div>
+          <div class="contact-info">
+            <div class="label">Legal Inquiries</div>
+            <div class="value"><a href="mailto:legal@pigletapp.com">legal@pigletapp.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">💬</div>
+          <div class="contact-info">
+            <div class="label">General Support</div>
+            <div class="value"><a href="mailto:support@pigletapp.com">support@pigletapp.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">⏰</div>
+          <div class="contact-info">
+            <div class="label">Response Time</div>
+            <div class="value">Within 48 business hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR TABLE OF CONTENTS -->
+  <aside>
+    <div class="toc">
+      <div class="toc-title">On This Page</div>
+      <a href="#s1">1. Agreement to Terms</a>
+      <a href="#s2">2. Description of Service</a>
+      <a href="#s3">3. User Accounts</a>
+      <a href="#s4">4. No Financial Guarantee</a>
+      <a href="#s5">5. Acceptable Use</a>
+      <a href="#s6">6. Intellectual Property</a>
+      <a href="#s7">7. Privacy & Data</a>
+      <a href="#s8">8. Limitation of Liability</a>
+      <a href="#s9">9. Termination</a>
+      <a href="#s10">10. Updates to Terms</a>
+      <a href="#s11">11. Governing Law</a>
+      <a href="#s12">12. Contact Us</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html" style="color:var(--green)">Terms & Conditions</a>
+    <a href="mailto:support@pigletapp.com">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Piglet App. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

@@ -1,27 +1,436 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Privacy Policy - Piglet</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy – Piglet AI Expense Tracker</title>
+  <meta name="description" content="Piglet Privacy Policy – Learn how we collect, use, and protect your personal information.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-light: #4ade80;
+      --green-glow: rgba(34,197,94,0.2);
+      --bg: #080e14;
+      --bg2: #0d1520;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-faint: #64748b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 6%;
+      background: rgba(8,14,20,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 1.3rem; font-weight: 800; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-muted); text-decoration: none; font-size: .9rem;
+      font-weight: 500; padding: 8px 16px; border-radius: 8px;
+      border: 1px solid var(--card-border);
+      transition: color .2s, border-color .2s;
+    }
+    .nav-back:hover { color: var(--green); border-color: rgba(34,197,94,.3); }
+
+    /* HERO BAND */
+    .page-hero {
+      padding: 60px 6% 50px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.07) 0%, transparent 60%);
+      border-bottom: 1px solid var(--card-border);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%);
+    }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25);
+      color: var(--green); font-size: .78rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px;
+    }
+    .page-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+    .meta-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .85rem; color: var(--text-muted);
+    }
+
+    /* LAYOUT */
+    .content-wrap {
+      max-width: 991px; margin: 0 auto;
+      padding: 60px 6%;
+      display: grid; grid-template-columns: 1fr 260px; gap: 48px;
+      align-items: start;
+    }
+    .content-main { min-width: 0; }
+
+    /* SIDEBAR TABLE OF CONTENTS */
+    .toc {
+      position: sticky; top: 80px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 24px; font-size: .88rem;
+    }
+    .toc-title {
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-faint); margin-bottom: 14px;
+    }
+    .toc a {
+      display: block; color: var(--text-muted); text-decoration: none;
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color .2s; font-size: .84rem;
+    }
+    .toc a:last-child { border-bottom: none; }
+    .toc a:hover { color: var(--green); }
+
+    /* SECTIONS */
+    .policy-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .policy-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .section-num {
+      font-size: .75rem; font-weight: 700; color: var(--green);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px;
+    }
+    .policy-section h2 {
+      font-size: 1.35rem; font-weight: 700; margin-bottom: 16px;
+      letter-spacing: -.01em;
+    }
+    .policy-section p {
+      color: var(--text-muted); font-size: .95rem;
+      margin-bottom: 14px; line-height: 1.8;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    /* LIST */
+    .policy-list {
+      list-style: none; margin: 14px 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .policy-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      color: var(--text-muted); font-size: .95rem;
+    }
+    .policy-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); margin-top: 8px; flex-shrink: 0;
+    }
+
+    /* INFO CARD */
+    .info-card {
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 12px; padding: 18px 20px; margin: 20px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .info-card-icon { font-size: 1.2rem; margin-top: 2px; }
+    .info-card-text { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+    .info-card-text strong { color: var(--green-light); }
+
+    /* WARNING CARD */
+    .warn-card {
+      background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15);
+      border-radius: 12px; padding: 18px 20px; margin: 20px 0;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .warn-card-text { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+    .warn-card-text strong { color: #fbbf24; }
+
+    /* CONTACT CARD */
+    .contact-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 28px 24px; margin-top: 20px;
+    }
+    .contact-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
+    .contact-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 12px;
+    }
+    .contact-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-info .label { font-size: .75rem; color: var(--text-faint); }
+    .contact-info .value { font-size: .9rem; color: var(--text); font-weight: 500; }
+    .contact-info a { color: var(--green); text-decoration: none; }
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--card-border);
+      text-align: center; padding: 28px 6%;
+    }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 12px; }
+    .footer-links a {
+      font-size: .87rem; color: var(--text-muted); text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--green); }
+    .footer-copy { font-size: .82rem; color: var(--text-faint); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .content-wrap { grid-template-columns: 1fr; }
+      .toc { display: none; }
+    }
+  </style>
 </head>
 <body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.png" alt="Piglet Logo"></a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">🔒 Legal Document</div>
   <h1>Privacy Policy</h1>
+  <div class="page-meta">
+    <div class="meta-item">📅 Effective: January 1, 2026</div>
+    <div class="meta-item">🔄 Last Updated: March 2026</div>
+    <div class="meta-item">📖 ~5 min read</div>
+  </div>
+</div>
 
-  <p>Piglet respects your privacy.</p>
+<div class="content-wrap">
+  <!-- MAIN CONTENT -->
+  <div class="content-main">
 
-  <h3>Information We Collect</h3>
-  <p>We collect only necessary data such as expenses and usage data to improve app functionality.</p>
+    <div class="info-card">
+      <div class="info-card-icon">🛡️</div>
+      <div class="info-card-text">
+        <strong>Your privacy is our priority.</strong> We believe in complete transparency about how your data is handled. This policy explains exactly what we collect, why, and how we protect it. We never sell your personal data.
+      </div>
+    </div>
 
-  <h3>How We Use Data</h3>
-  <p>Your data is used to provide AI-based financial insights and improve your experience.</p>
+    <!-- 1 -->
+    <div class="policy-section" id="s1">
+      <div class="section-num">Section 01</div>
+      <h2>Introduction & Who We Are</h2>
+      <p>Piglet ("we", "our", or "us") is an AI-powered expense tracking and personal financial advisor application developed by Piglet App. We are committed to protecting your privacy and handling your data with full transparency and respect.</p>
+      <p>This Privacy Policy applies to the Piglet mobile application (iOS & Android) and our associated website at <strong>pigletapp.com</strong>. By using Piglet, you consent to the practices described in this policy.</p>
+    </div>
 
-  <h3>Data Security</h3>
-  <p>Your data is stored securely and never sold to third parties.</p>
+    <!-- 2 -->
+    <div class="policy-section" id="s2">
+      <div class="section-num">Section 02</div>
+      <h2>Information We Collect</h2>
+      <p>We collect only the minimum data necessary to provide you with a great financial management experience:</p>
 
-  <h3>Permissions</h3>
-  <p>We may request storage or notification permissions for app features.</p>
+      <p><strong style="color:var(--text)">Data you provide directly:</strong></p>
+      <ul class="policy-list">
+        <li>Account information: name, email address (via Google Sign-In or Email/Password)</li>
+        <li>Financial data you enter: transactions, expense categories, budgets, and savings goals</li>
+        <li>Profile information: profile picture (from Google account if using Google Sign-In)</li>
+        <li>AI chat messages: questions and conversations with the Piglet AI advisor</li>
+      </ul>
 
-  <h3>Contact</h3>
-  <p>Email: support@pigletapp.com</p>
+      <p><strong style="color:var(--text)">Data collected automatically:</strong></p>
+      <ul class="policy-list">
+        <li>App usage analytics: features used, screens viewed, session duration</li>
+        <li>Device information: device type, operating system version, app version</li>
+        <li>Crash reports and error logs to improve app stability</li>
+        <li>Firebase Analytics data for understanding app performance</li>
+      </ul>
+
+      <div class="info-card">
+        <div class="info-card-icon">💳</div>
+        <div class="info-card-text"><strong>We do NOT collect</strong> your bank account passwords, credit card numbers, or directly link to your bank accounts. All financial data in Piglet is manually entered by you.</div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="policy-section" id="s3">
+      <div class="section-num">Section 03</div>
+      <h2>How We Use Your Information</h2>
+      <p>Your data is used solely to provide, improve, and personalize the Piglet experience:</p>
+      <ul class="policy-list">
+        <li>To provide AI-powered financial insights and advice tailored to your spending patterns</li>
+        <li>To sync your data across devices and enable Google Drive backup/restore</li>
+        <li>To send bill reminders and budget alerts via push notifications</li>
+        <li>To analyze aggregate (anonymous) usage patterns to improve app features</li>
+        <li>To respond to support requests and communicate important updates</li>
+        <li>To detect and prevent fraud, abuse, or misuse of the service</li>
+      </ul>
+      <div class="warn-card">
+        <div class="info-card-icon">⚠️</div>
+        <div class="warn-card-text"><strong>AI Processing:</strong> When you use the AI advisor, your questions and relevant expense data are sent to Google's Gemini API for processing. Please do not share sensitive personal identifiers (PAN, Aadhaar, bank passwords) in chat messages.</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="policy-section" id="s4">
+      <div class="section-num">Section 04</div>
+      <h2>Data Storage & Security</h2>
+      <p>Your data is stored securely using industry-standard practices:</p>
+      <ul class="policy-list">
+        <li>Primary data storage via <strong style="color:var(--text)">Google Firebase</strong> — encrypted at rest and in transit using AES-256 and TLS 1.3</li>
+        <li>Local data is stored using encrypted AsyncStorage on your device</li>
+        <li>Google Drive backup data is encrypted and stored in your personal Google Drive — only you have access</li>
+        <li>Authentication is handled via Firebase Authentication — we never store passwords in plain text</li>
+        <li>Regular security reviews and automated vulnerability scanning</li>
+      </ul>
+      <div class="info-card">
+        <div class="info-card-icon">🔑</div>
+        <div class="info-card-text"><strong>Google Drive Backup:</strong> When you enable backup, data is stored in your own Google Drive. We cannot access your Google Drive. You can delete backup files at any time directly from your Drive.</div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="policy-section" id="s5">
+      <div class="section-num">Section 05</div>
+      <h2>Data Sharing & Third Parties</h2>
+      <p>We do not sell, rent, or trade your personal information. Limited data sharing occurs only in these specific circumstances:</p>
+      <ul class="policy-list">
+        <li><strong style="color:var(--text)">Google Firebase:</strong> Hosting, authentication, and database services</li>
+        <li><strong style="color:var(--text)">Google Gemini API:</strong> Processing AI advisor queries (only query text + your summarized expense context is sent)</li>
+        <li><strong style="color:var(--text)">Google Drive API:</strong> Backup and restore functionality (requires your explicit authorization)</li>
+        <li><strong style="color:var(--text)">Legal requirements:</strong> If required by law, court order, or government authority</li>
+      </ul>
+      <p>All third-party service providers are bound by their own privacy policies and data processing agreements that prohibit them from using your data for unauthorized purposes.</p>
+    </div>
+
+    <!-- 6 -->
+    <div class="policy-section" id="s6">
+      <div class="section-num">Section 06</div>
+      <h2>App Permissions</h2>
+      <p>Piglet may request the following device permissions. We only ask for what's necessary:</p>
+      <ul class="policy-list">
+        <li><strong style="color:var(--text)">Notifications:</strong> To send bill reminders and budget alerts. You can disable at any time in device settings.</li>
+        <li><strong style="color:var(--text)">Internet Access:</strong> Required for AI features, sync, and cloud backup.</li>
+        <li><strong style="color:var(--text)">Google Account Access:</strong> For Google Sign-In and optional Google Drive backup.</li>
+        <li><strong style="color:var(--text)">Storage / Camera (optional):</strong> If you scan receipts or bills. Not required for core functionality.</li>
+      </ul>
+    </div>
+
+    <!-- 7 -->
+    <div class="policy-section" id="s7">
+      <div class="section-num">Section 07</div>
+      <h2>Your Rights & Controls</h2>
+      <p>You have full control over your data. You can exercise the following rights at any time:</p>
+      <ul class="policy-list">
+        <li><strong style="color:var(--text)">Access:</strong> View all data associated with your account within the app</li>
+        <li><strong style="color:var(--text)">Export:</strong> Export your expense data in CSV or PDF format from the app</li>
+        <li><strong style="color:var(--text)">Delete:</strong> Delete your account and all associated data permanently from app Settings → Account → Delete Account</li>
+        <li><strong style="color:var(--text)">Opt-out:</strong> Disable analytics collection in app Settings → Privacy</li>
+        <li><strong style="color:var(--text)">Portability:</strong> Your data can be exported before account deletion</li>
+      </ul>
+      <p>Account deletion permanently removes all your data from our servers within 30 days of the request. Google Drive backup files must be deleted manually from your Drive.</p>
+    </div>
+
+    <!-- 8 -->
+    <div class="policy-section" id="s8">
+      <div class="section-num">Section 08</div>
+      <h2>Children's Privacy</h2>
+      <p>Piglet is not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us immediately and we will delete that information.</p>
+    </div>
+
+    <!-- 9 -->
+    <div class="policy-section" id="s9">
+      <div class="section-num">Section 09</div>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for legal or regulatory reasons. When we make significant changes, we will:</p>
+      <ul class="policy-list">
+        <li>Notify you via a push notification in the Piglet app</li>
+        <li>Update the "Last Updated" date at the top of this page</li>
+        <li>For material changes, request re-consent if required by law</li>
+      </ul>
+      <p>Continued use of Piglet after changes become effective constitutes your acceptance of the updated policy.</p>
+    </div>
+
+    <!-- 10 -->
+    <div class="policy-section" id="s10">
+      <div class="section-num">Section 10</div>
+      <h2>Contact Us</h2>
+      <p>If you have questions, concerns, or requests regarding your privacy or this policy, we're here to help:</p>
+      <div class="contact-card">
+        <h3>🐷 Piglet Support Team</h3>
+        <div class="contact-row">
+          <div class="contact-icon">📧</div>
+          <div class="contact-info">
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:privacy@pigletapp.com">privacy@pigletapp.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">💬</div>
+          <div class="contact-info">
+            <div class="label">Support</div>
+            <div class="value"><a href="mailto:support@pigletapp.com">support@pigletapp.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">⏰</div>
+          <div class="contact-info">
+            <div class="label">Response Time</div>
+            <div class="value">Within 48 business hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR TABLE OF CONTENTS -->
+  <aside>
+    <div class="toc">
+      <div class="toc-title">On This Page</div>
+      <a href="#s1">1. Introduction</a>
+      <a href="#s2">2. Information We Collect</a>
+      <a href="#s3">3. How We Use Data</a>
+      <a href="#s4">4. Data Storage & Security</a>
+      <a href="#s5">5. Data Sharing</a>
+      <a href="#s6">6. App Permissions</a>
+      <a href="#s7">7. Your Rights</a>
+      <a href="#s8">8. Children's Privacy</a>
+      <a href="#s9">9. Policy Changes</a>
+      <a href="#s10">10. Contact Us</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="privacy.html" style="color:var(--green)">Privacy Policy</a>
+    <a href="terms.html">Terms & Conditions</a>
+    <a href="mailto:support@pigletapp.com">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Piglet App. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

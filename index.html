@@ -2,71 +2,896 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Piglet - AI Expense Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piglet – AI Expense Tracker & Financial Advisor</title>
+  <meta name="description" content="Piglet is your intelligent AI-powered expense tracker and personal financial advisor. Track spending, get smart insights, save more.">
+  <meta property="og:title" content="Piglet – AI Expense Tracker">
+  <meta property="og:description" content="Track expenses. Save smarter. Grow your money with AI-powered insights.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-light: #4ade80;
+      --green-glow: rgba(34,197,94,0.25);
+      --bg: #080e14;
+      --bg2: #0d1520;
+      --bg3: #111c2a;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-faint: #64748b;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #0f172a;
-      color: white;
-      text-align: center;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
-    header {
-      padding: 60px 20px;
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(8,14,20,0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      transition: all .3s;
     }
-    h1 {
-      font-size: 40px;
-      color: #22c55e;
-    }
-    p {
-      font-size: 18px;
-      color: #cbd5f5;
-    }
-    .btn {
-      background: #22c55e;
-      padding: 12px 20px;
-      color: black;
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.4rem; font-weight: 800; color: var(--text);
       text-decoration: none;
-      border-radius: 8px;
-      margin-top: 20px;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      color: var(--text-muted); font-size: .9rem; font-weight: 500;
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      background: var(--green); color: #000 !important;
+      padding: 9px 22px; border-radius: 8px; font-weight: 700 !important;
+      transition: background .2s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--green-light) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(34,197,94,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 50% at 80% 80%, rgba(16,163,74,0.08) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0; opacity: .04;
+      background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      color: var(--green-light); font-size: .8rem; font-weight: 600;
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 28px;
+      position: relative; z-index: 1;
+      animation: fadeUp .6s ease both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: .4; }
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -.03em;
+      position: relative; z-index: 1;
+      animation: fadeUp .7s ease .1s both;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--green) 0%, #86efac 60%, #4ade80 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      max-width: 600px; font-size: 1.2rem; color: var(--text-muted);
+      margin: 24px auto 40px; position: relative; z-index: 1;
+      animation: fadeUp .7s ease .2s both;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      justify-content: center; position: relative; z-index: 1;
+      animation: fadeUp .7s ease .3s both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      color: #000; font-weight: 700; font-size: 1rem;
+      padding: 14px 32px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 0 32px var(--green-glow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 48px var(--green-glow); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--text); font-weight: 600; font-size: 1rem;
+      padding: 14px 28px; border-radius: 12px; text-decoration: none;
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      transition: border-color .2s, transform .2s;
+    }
+    .btn-secondary:hover { border-color: var(--green); transform: translateY(-3px); }
+    .store-icon { font-size: 1.3rem; }
+
+    /* hero phone mockup */
+    .hero-phone {
+      position: relative; z-index: 1; margin-top: 70px;
+      animation: fadeUp .8s ease .4s both;
+    }
+    .phone-wrap {
+      width: 260px; height: 520px;
+      background: linear-gradient(145deg, #1a2535, #0d1520);
+      border-radius: 44px;
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 80px rgba(34,197,94,0.15), 0 40px 80px rgba(0,0,0,0.5);
+      margin: 0 auto; overflow: hidden; position: relative;
+    }
+    .phone-notch {
+      width: 100px; height: 26px;
+      background: #080e14; border-radius: 0 0 18px 18px;
+      margin: 0 auto; position: relative; z-index: 2;
+    }
+    .phone-screen {
+      padding: 8px 14px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ps-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 0;
+    }
+    .ps-title { font-size: .75rem; font-weight: 700; color: var(--text); }
+    .ps-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem;
+    }
+    .ps-balance-card {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      border-radius: 14px; padding: 14px;
+    }
+    .ps-bal-label { font-size: .6rem; color: rgba(255,255,255,.7); }
+    .ps-bal-amount { font-size: 1.4rem; font-weight: 800; color: #fff; margin: 2px 0 8px; }
+    .ps-bal-row { display: flex; gap: 12px; }
+    .ps-bal-item { flex: 1; }
+    .ps-bal-item .label { font-size: .55rem; color: rgba(255,255,255,.6); }
+    .ps-bal-item .val { font-size: .75rem; font-weight: 700; color: #fff; }
+    .ps-section-title { font-size: .65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+    .ps-expense-item {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.04); border-radius: 10px; padding: 8px;
+    }
+    .ps-exp-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; flex-shrink: 0;
+    }
+    .ps-exp-info { flex: 1; }
+    .ps-exp-name { font-size: .65rem; font-weight: 600; color: var(--text); }
+    .ps-exp-cat { font-size: .55rem; color: var(--text-muted); }
+    .ps-exp-amount { font-size: .7rem; font-weight: 700; color: #f87171; }
+    .ps-exp-amount.income { color: var(--green-light); }
+    .ai-chip {
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px; padding: 8px 10px;
+      display: flex; align-items: flex-start; gap: 6px;
+    }
+    .ai-chip-icon { font-size: .9rem; margin-top: 1px; }
+    .ai-chip-text { font-size: .58rem; color: var(--green-light); line-height: 1.4; }
+
+    /* floating badges around phone */
+    .float-badge {
+      position: absolute; z-index: 2;
+      background: rgba(13,21,32,0.95);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      border-radius: 14px; padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .fb1 { left: -140px; top: 80px; animation: float1 3s ease-in-out infinite; }
+    .fb2 { right: -130px; top: 160px; animation: float2 3.5s ease-in-out infinite; }
+    .fb3 { left: -120px; bottom: 120px; animation: float1 4s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+    .fb-icon { font-size: 1.4rem; }
+    .fb-text .label { font-size: .65rem; color: var(--text-muted); }
+    .fb-text .value { font-size: .9rem; font-weight: 700; color: var(--text); }
+    .fb-text .value.green { color: var(--green-light); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 100px 6%; }
+    .section-tag {
       display: inline-block;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      color: var(--green); font-size: .78rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 100px; text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: 16px;
     }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+      line-height: 1.15; letter-spacing: -.02em;
+    }
+    .section-sub {
+      font-size: 1.1rem; color: var(--text-muted); max-width: 560px; margin: 16px auto 0;
+    }
+    .text-center { text-align: center; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: flex; flex-wrap: wrap; gap: 24px;
+      justify-content: center; margin-bottom: 80px;
+    }
+    .stat-card {
+      flex: 1; min-width: 180px; max-width: 240px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 28px 24px; text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .stat-card:hover { border-color: rgba(34,197,94,0.3); transform: translateY(-4px); }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; color: var(--green);
+      line-height: 1;
+    }
+    .stat-label { font-size: .85rem; color: var(--text-muted); margin-top: 8px; }
+
+    /* ── FEATURES ── */
+    #features { background: var(--bg2); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+    .feat-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 32px 28px;
+      transition: border-color .3s, transform .3s, background .3s;
+      position: relative; overflow: hidden;
+    }
+    .feat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .feat-card:hover { border-color: rgba(34,197,94,0.3); transform: translateY(-6px); background: rgba(255,255,255,0.06); }
+    .feat-card:hover::before { opacity: 1; }
+    .feat-icon {
+      width: 54px; height: 54px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .feat-icon-1 { background: rgba(34,197,94,0.15); }
+    .feat-icon-2 { background: rgba(99,102,241,0.15); }
+    .feat-icon-3 { background: rgba(245,158,11,0.15); }
+    .feat-icon-4 { background: rgba(239,68,68,0.15); }
+    .feat-icon-5 { background: rgba(14,165,233,0.15); }
+    .feat-icon-6 { background: rgba(168,85,247,0.15); }
+    .feat-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .feat-desc { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .steps-container {
+      display: flex; flex-direction: column; gap: 0; margin-top: 60px;
+      max-width: 700px; margin-left: auto; margin-right: auto;
+    }
+    .step {
+      display: flex; gap: 28px; position: relative;
+      padding-bottom: 48px;
+    }
+    .step:last-child { padding-bottom: 0; }
+    .step-left { display: flex; flex-direction: column; align-items: center; }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem; color: #000;
+      flex-shrink: 0; box-shadow: 0 0 24px var(--green-glow);
+    }
+    .step-line {
+      width: 2px; flex: 1; margin-top: 8px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+    }
+    .step-content { padding-top: 10px; }
+    .step-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    .step-desc { font-size: .95rem; color: var(--text-muted); }
+
+    /* ── AI SECTION ── */
+    #ai { background: var(--bg3); }
+    .ai-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center; margin-top: 20px;
+    }
+    .ai-visual {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 28px; position: relative;
+    }
+    .ai-chat { display: flex; flex-direction: column; gap: 14px; }
+    .ai-msg {
+      max-width: 80%; padding: 12px 16px; border-radius: 16px;
+      font-size: .88rem; line-height: 1.5;
+    }
+    .ai-msg.user {
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2);
+      color: var(--green-light); align-self: flex-end; border-radius: 16px 16px 4px 16px;
+    }
+    .ai-msg.bot {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
+      color: var(--text); align-self: flex-start; border-radius: 16px 16px 16px 4px;
+    }
+    .ai-msg.bot strong { color: var(--green-light); }
+    .ai-label {
+      font-size: .7rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;
+    }
+    .ai-features-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .ai-features-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .ai-feat-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .ai-feat-content .title { font-size: .95rem; font-weight: 700; margin-bottom: 3px; }
+    .ai-feat-content .desc { font-size: .85rem; color: var(--text-muted); }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--bg2); }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 28px;
+      transition: transform .3s, border-color .3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.2); }
+    .stars { color: #fbbf24; font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { font-size: .95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .85rem; color: #000;
+    }
+    .testi-name { font-size: .9rem; font-weight: 700; }
+    .testi-role { font-size: .78rem; color: var(--text-muted); }
+
+    /* ── CTA ── */
+    #cta {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, transparent 60%);
+      border-top: 1px solid rgba(34,197,94,0.1);
+    }
+    .cta-box {
+      max-width: 700px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(22,163,74,0.04) 100%);
+      border: 1px solid rgba(34,197,94,0.2); border-radius: 28px;
+      padding: 60px 40px;
+    }
+    .cta-box h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 16px; }
+    .cta-box p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 36px; }
+    .store-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+      color: var(--text); text-decoration: none;
+      padding: 14px 28px; border-radius: 14px;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .store-btn:hover { border-color: var(--green); background: rgba(34,197,94,0.08); transform: translateY(-3px); }
+    .store-btn .sb-icon { font-size: 1.8rem; }
+    .store-btn .sb-text .line1 { font-size: .7rem; color: var(--text-muted); }
+    .store-btn .sb-text .line2 { font-size: 1rem; font-weight: 700; }
+
+    /* ── FOOTER ── */
     footer {
-      margin-top: 50px;
-      padding: 20px;
-      font-size: 14px;
-      color: #94a3b8;
+      background: var(--bg2); border-top: 1px solid var(--card-border);
+      padding: 50px 6% 30px;
     }
-    a {
-      color: #22c55e;
+    .footer-top {
+      display: flex; flex-wrap: wrap; gap: 40px;
+      justify-content: space-between; margin-bottom: 40px;
+    }
+    .footer-brand { max-width: 280px; }
+    .footer-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.3rem; font-weight: 800;
+      text-decoration: none; color: var(--text); margin-bottom: 12px;
+    }
+    .footer-logo img { height: 36px; width: auto; }
+    .footer-tagline { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+    .footer-col h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-faint); margin-bottom: 16px; }
+    .footer-col a {
+      display: block; color: var(--text-muted); text-decoration: none;
+      font-size: .9rem; margin-bottom: 10px; transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--green); }
+    .footer-bottom {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid var(--card-border);
+    }
+    .footer-bottom p { font-size: .84rem; color: var(--text-faint); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: .84rem; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+    .footer-legal a:hover { color: var(--green); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .ai-split { grid-template-columns: 1fr; }
+      .fb1, .fb2, .fb3 { display: none; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hero { padding: 100px 5% 60px; }
+      .phone-wrap { width: 220px; height: 440px; }
+      section { padding: 70px 5%; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; }
+      .cta-box { padding: 40px 24px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>🐷 Piglet</h1>
-  <p>AI Expense Tracker & Financial Advisor</p>
-  <p>Track expenses. Save smarter. Grow your money.</p>
-  <a href="#" class="btn">Download App</a>
-</header>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Piglet Logo">
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#ai">AI Advisor</a>
+    <a href="#how">How It Works</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#cta" class="nav-cta">Download Free</a>
+  </div>
+</nav>
 
-<section>
-  <h2>🚀 Features</h2>
-  <p>✔ Smart Expense Tracking</p>
-  <p>✔ AI Financial Advice</p>
-  <p>✔ Budget Insights</p>
-  <p>✔ Bill Reminders</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    AI-Powered Personal Finance
+  </div>
+
+  <h1>
+    Track Smarter.<br>
+    Save <span class="accent">Effortlessly.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Piglet is your intelligent financial companion — automatically categorizes expenses, delivers AI-powered insights, and helps you build wealth without the stress.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">
+      <span class="store-icon">📱</span>
+      Download Free
+    </a>
+    <a href="#features" class="btn-secondary">
+      Explore Features →
+    </a>
+  </div>
+
+  <div class="hero-phone">
+    <!-- Floating badges -->
+    <div class="float-badge fb1">
+      <span class="fb-icon">💰</span>
+      <div class="fb-text">
+        <div class="label">Monthly Saved</div>
+        <div class="value green">+₹4,820</div>
+      </div>
+    </div>
+    <div class="float-badge fb2">
+      <span class="fb-icon">📊</span>
+      <div class="fb-text">
+        <div class="label">Budget Status</div>
+        <div class="value">On Track ✓</div>
+      </div>
+    </div>
+    <div class="float-badge fb3">
+      <span class="fb-icon">🤖</span>
+      <div class="fb-text">
+        <div class="label">AI Insight</div>
+        <div class="value">New tip ready</div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="ps-header">
+          <div class="ps-title">Good morning 👋</div>
+          <div class="ps-avatar"><img src="logo.png" alt="Piglet" style="width:28px;height:28px;border-radius:50%;object-fit:cover;"></div>
+        </div>
+        <div class="ps-balance-card">
+          <div class="ps-bal-label">TOTAL BALANCE</div>
+          <div class="ps-bal-amount">₹42,350</div>
+          <div class="ps-bal-row">
+            <div class="ps-bal-item">
+              <div class="label">↑ Income</div>
+              <div class="val">₹68,000</div>
+            </div>
+            <div class="ps-bal-item">
+              <div class="label">↓ Spent</div>
+              <div class="val">₹25,650</div>
+            </div>
+          </div>
+        </div>
+        <div class="ps-section-title">Recent Expenses</div>
+        <div class="ps-expense-item">
+          <div class="ps-exp-icon" style="background:rgba(99,102,241,.2)">🛒</div>
+          <div class="ps-exp-info">
+            <div class="ps-exp-name">Grocery Store</div>
+            <div class="ps-exp-cat">Food & Dining</div>
+          </div>
+          <div class="ps-exp-amount">-₹1,240</div>
+        </div>
+        <div class="ps-expense-item">
+          <div class="ps-exp-icon" style="background:rgba(245,158,11,.2)">⚡</div>
+          <div class="ps-exp-info">
+            <div class="ps-exp-name">Electricity Bill</div>
+            <div class="ps-exp-cat">Utilities</div>
+          </div>
+          <div class="ps-exp-amount">-₹890</div>
+        </div>
+        <div class="ps-expense-item">
+          <div class="ps-exp-icon" style="background:rgba(34,197,94,.2)">💼</div>
+          <div class="ps-exp-info">
+            <div class="ps-exp-name">Salary Credit</div>
+            <div class="ps-exp-cat">Income</div>
+          </div>
+          <div class="ps-exp-amount income">+₹68,000</div>
+        </div>
+        <div class="ai-chip">
+          <div class="ai-chip-icon">🤖</div>
+          <div class="ai-chip-text">
+            <strong>AI Tip:</strong> You spend 22% on dining. Reducing by ₹500/week can save ₹2,000 monthly!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- STATS -->
+<section style="padding: 50px 6%;">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">50K+</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">₹2Cr+</div>
+      <div class="stat-label">Expenses Tracked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4.8★</div>
+      <div class="stat-label">App Store Rating</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">30%</div>
+      <div class="stat-label">Avg. More Saved</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="text-center">
+    <div class="section-tag">⚡ Features</div>
+    <h2 class="section-title">Everything you need to<br>master your finances</h2>
+    <p class="section-sub">Powerful tools that make expense tracking intuitive, insightful, and actually enjoyable.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-1">📊</div>
+      <div class="feat-title">Smart Expense Tracking</div>
+      <div class="feat-desc">Log expenses in seconds with smart auto-categorization. Supports manual entry, bill scan, and UPI sync to keep your records effortless.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-2">🤖</div>
+      <div class="feat-title">AI Financial Advisor</div>
+      <div class="feat-desc">Get personalized financial advice powered by Gemini AI. Ask anything about your spending, savings goals, or budget strategy.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-3">🎯</div>
+      <div class="feat-title">Budget & Goal Tracking</div>
+      <div class="feat-desc">Set monthly budgets per category and savings goals. Piglet alerts you before you overspend and celebrates milestones with you.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-4">🔔</div>
+      <div class="feat-title">Bill Reminders</div>
+      <div class="feat-desc">Never miss a due date. Schedule recurring reminders for rent, EMIs, subscriptions, and utility bills with seamless notifications.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-5">📈</div>
+      <div class="feat-title">Visual Analytics</div>
+      <div class="feat-desc">Beautiful charts and graphs that turn your spending data into clear insights — trends, breakdowns, and monthly comparisons at a glance.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon feat-icon-6">☁️</div>
+      <div class="feat-title">Google Drive Backup</div>
+      <div class="feat-desc">Your financial data is automatically backed up to Google Drive. Switch devices or restore data with a single tap — always safe.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--bg);">
+  <div class="text-center">
+    <div class="section-tag">🚀 How It Works</div>
+    <h2 class="section-title">Up and running in minutes</h2>
+    <p class="section-sub">Piglet is designed to fit seamlessly into your daily routine without any learning curve.</p>
+  </div>
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Download & Set Up in 60 Seconds</div>
+        <div class="step-desc">Install Piglet, sign in with Google or Email, and you're ready. No complex onboarding — just open and start tracking.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Add Your Expenses & Income</div>
+        <div class="step-desc">Quickly log transactions by category. Piglet auto-suggests categories based on your spending habits and gets smarter over time.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Get AI-Powered Insights</div>
+        <div class="step-desc">Chat with your AI financial advisor anytime. Ask "Am I on budget?" or "How can I save more?" and get smart, data-backed answers.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">4</div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Watch Your Savings Grow</div>
+        <div class="step-desc">Track your financial progress, hit savings goals, and build healthy money habits — all backed by real data and actionable insights.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section id="ai">
+  <div class="section-tag">🤖 AI Advisor</div>
+  <div class="ai-split">
+    <div>
+      <h2 class="section-title">Your personal<br><span style="color:var(--green)">financial genius</span></h2>
+      <p style="color:var(--text-muted); margin: 16px 0 32px; font-size:1rem; line-height:1.7;">
+        Piglet's AI advisor, powered by Gemini, analyzes your spending patterns and gives proactive advice tailored to your financial situation — like having a CFO in your pocket.
+      </p>
+      <ul class="ai-features-list">
+        <li>
+          <div class="ai-feat-icon">💬</div>
+          <div class="ai-feat-content">
+            <div class="title">Natural Language Chat</div>
+            <div class="desc">Ask any money question in plain language and get clear, personalized answers instantly.</div>
+          </div>
+        </li>
+        <li>
+          <div class="ai-feat-icon">📉</div>
+          <div class="ai-feat-content">
+            <div class="title">Spending Pattern Analysis</div>
+            <div class="desc">AI detects unusual spending, seasonal trends, and warns you before you blow your budget.</div>
+          </div>
+        </li>
+        <li>
+          <div class="ai-feat-icon">🎯</div>
+          <div class="ai-feat-content">
+            <div class="title">Goal-Based Recommendations</div>
+            <div class="desc">Tell Piglet your savings goal and it creates a custom action plan to help you get there.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="ai-visual">
+      <div class="ai-chat">
+        <div class="ai-label">You</div>
+        <div class="ai-msg user">How much did I spend on food this month?</div>
+        <div class="ai-label">🐷 Piglet AI</div>
+        <div class="ai-msg bot">You've spent <strong>₹8,240 on food</strong> this month — that's 32% of your budget. Your peak spending was last Thursday at Swiggy. <br><br>💡 On track compared to last month, but I'd suggest cooking at home 2 extra days/week to save ~₹1,200 more.</div>
+        <div class="ai-label">You</div>
+        <div class="ai-msg user">How can I save ₹10,000 by next month?</div>
+        <div class="ai-label">🐷 Piglet AI</div>
+        <div class="ai-msg bot">Here's a plan to save <strong>₹10,000 in 30 days</strong>:<br>• Reduce dining out → save ₹3,500<br>• Pause 2 subscriptions → save ₹800<br>• Grocery budget cut → save ₹2,200<br>• Misc. expenses → save ₹3,500<br><br>I'll send daily reminders to keep you on track! 🚀</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="text-center">
+    <div class="section-tag">❤️ Reviews</div>
+    <h2 class="section-title">Loved by thousands</h2>
+    <p class="section-sub">Real stories from people who transformed their financial habits with Piglet.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"I've tried many expense apps but Piglet is different. The AI advisor actually helped me cut my monthly spending by ₹6,000. It feels like having a real financial advisor!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">RK</div>
+        <div>
+          <div class="testi-name">Rahul Kumar</div>
+          <div class="testi-role">Software Engineer, Bangalore</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"The budget tracking and bill reminders are life-savers. I never miss a payment now, and the visual charts make it so easy to see where my money goes each month."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">PS</div>
+        <div>
+          <div class="testi-name">Priya Sharma</div>
+          <div class="testi-role">Freelance Designer, Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"I set a savings goal of ₹50,000 and Piglet's AI broke it down into daily targets. Reached my goal in just 3 months! The Google Drive backup gives me total peace of mind."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AM</div>
+        <div>
+          <div class="testi-name">Arjun Mehta</div>
+          <div class="testi-role">MBA Student, Delhi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-box">
+    <div class="section-tag">🎉 Free to Download</div>
+    <h2>Start your financial<br>freedom journey today</h2>
+    <p>Join 50,000+ people who are already saving more with Piglet. Free to download, always.</p>
+    <div class="store-buttons">
+      <a href="#" class="store-btn" id="playstore-btn">
+        <span class="sb-icon">🤖</span>
+        <div class="sb-text">
+          <div class="line1">Get it on</div>
+          <div class="line2">Google Play</div>
+        </div>
+      </a>
+      <a href="#" class="store-btn" id="appstore-btn">
+        <span class="sb-icon">🍎</span>
+        <div class="sb-text">
+          <div class="line1">Download on the</div>
+          <div class="line2">App Store</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <p>
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms & Conditions</a>
-  </p>
-  <p>© 2026 Piglet App</p>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo"><img src="logo.png" alt="Piglet Logo"></a>
+      <p class="footer-tagline">AI-powered expense tracking and financial advisory for everyone. Track smarter, save effortlessly.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#ai">AI Advisor</a>
+      <a href="#how">How It Works</a>
+      <a href="#testimonials">Reviews</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="mailto:support@pigletapp.com">Contact</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Piglet App. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+  </div>
 </footer>
 
+<script>
+  // Smooth nav color on scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) {
+      nav.style.background = 'rgba(8,14,20,0.95)';
+    } else {
+      nav.style.background = 'rgba(8,14,20,0.8)';
+    }
+  });
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feat-card, .stat-card, .testi-card, .step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    observer.observe(el);
+  });
+</script>
 </body>
 </html>
