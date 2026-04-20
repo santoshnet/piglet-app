@@ -264,6 +264,7 @@
         <li>Device information: device type, operating system version, app version</li>
         <li>Crash reports and error logs to improve app stability</li>
         <li>Firebase Analytics data for understanding app performance</li>
+        <li>SMS transaction data (Android only, when enabled): Bank and payment app SMS messages containing transaction information (amounts, dates, merchant names). This data is processed locally and only transaction details are extracted and stored.</li>
       </ul>
 
       <div class="info-card">
@@ -333,7 +334,15 @@
         <li><strong style="color:var(--text)">Internet Access:</strong> Required for AI features, sync, and cloud backup.</li>
         <li><strong style="color:var(--text)">Google Account Access:</strong> For Google Sign-In and optional Google Drive backup.</li>
         <li><strong style="color:var(--text)">Storage / Camera (optional):</strong> If you scan receipts or bills. Not required for core functionality.</li>
+        <li><strong style="color:var(--text)">SMS Access (Android only, optional):</strong> To automatically detect bank transactions from SMS messages. Only reads messages from banks and payment apps (HDFC, SBI, ICICI, Paytm, PhonePe, GPay, etc.). This feature is completely optional and only requested when you choose to enable automatic transaction import.</li>
       </ul>
+      
+      <div class="info-card">
+        <div class="info-card-icon">📱</div>
+        <div class="info-card-text">
+          <strong>SMS Transaction Detection:</strong> When enabled, Piglet reads SMS messages from banks and payment providers to automatically detect financial transactions. We only process messages that contain transaction information (amounts, dates, account details). Your SMS data is processed locally on your device and is never shared with third parties. You can disable this feature at any time or choose to add transactions manually instead.
+        </div>
+      </div>
     </div>
 
     <!-- 7 -->
